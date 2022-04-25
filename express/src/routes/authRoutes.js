@@ -71,7 +71,9 @@ router.post('/login', async (req, res) => {
         return res.status(400).send({ error: "Must provide username and password" });
     }
 
-    let adResult = await authenticateADUser(username, password);
+    let adResult = await authenticateADUser(username, password).catch(error => {
+        return error;
+    });
 
     if (!adResult) {
         return res.status(500).send({ error: "Internal server error" });
